@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
+	"strconv"
+	"strings"
+	"time"
 )
 
 var enigme []string
@@ -32,8 +36,9 @@ func main() {
 	phase1()
 	phase2()
 	phase3()
-	//phase4()
+	phase4()
 	fmt.Println(enigme)
+	random_number()
 }
 
 func phase1() []string {
@@ -47,9 +52,28 @@ func phase2() []string {
 }
 
 func phase3() []string {
-
+	for index, mot := range liste_mot {
+		if mot == "before" {
+			coord, _ := strconv.Atoi(liste_mot[index+1])
+			enigme = append(enigme, liste_mot[coord-1])
+		}
+	}
+	return enigme
 }
 
 func phase4() []string {
+	for index, mot := range liste_mot {
+		if strings.Contains(mot, "now") {
+			mot_temp := liste_mot[index-1]
+			coords := int(mot_temp[1])/len(liste_mot) - 1
+			enigme = append(enigme, liste_mot[coords])
+		}
+	}
+	return enigme
+}
 
+func random_number() {
+	rand.Seed(time.Now().UTC().UnixNano())
+	RandomInteger := rand.Intn(1100000000000)
+	fmt.Println(RandomInteger)
 }
